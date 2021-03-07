@@ -9,10 +9,19 @@ public class Grappling : MonoBehaviour
     private float maxDistance = 100f;
     [SerializeField]
     private LayerMask grappleLayer;
-    private Vector3 grapplePoint;
     private Rigidbody rb;
 
     private Ray ray;
+
+    private State state;
+    private Vector3 hookshotPosition;
+    private float reachedHookshotPositionDistance;
+
+    private enum State
+    {
+        Normal,
+        HookshotFlyingPlayer
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -24,14 +33,24 @@ public class Grappling : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        switch (state)
+        {
+            default:
+            case State.Normal:
+                HandleHookshotStart();
+                break;
+            case State.HookshotFlyingPlayer:
+                HandleHookshotMovement();
+                break;
+
+        }
         if (Input.GetMouseButtonDown(0))
         {
-            StartGrapple();
-            Debug.Log("StartedGrapple");
+            HandleHookshotStart();
         }
     }
 
-    void StartGrapple()
+    void HandleHookshotStart()
     {
         RaycastHit hit;
 
@@ -39,28 +58,22 @@ public class Grappling : MonoBehaviour
 
         if(Physics.Raycast(ray, out hit, maxDistance, grappleLayer))
         {
-            grapplePoint = hit.point;
-            //push towards point
-            StartCoroutine(FollowTarget(hit.transform, 3, 50));
-            Debug.Log("Grappled");
+            hookshotPosition = hit.point;
+            state = State.HookshotFlyingPlayer;
         }
     }
 
-    void StopGrapple()
+    void HandleHookshotMovement()
     {
+        Vector3 hookshotDir = (hookshotPosition - transform.position).normalized;
 
-    }
+        float hookshotSpeed = Vector3.Distance(transform.position, hookshotPosition);
+        float speedMultiplier = 2f;
 
-    IEnumerator FollowTarget(Transform target, float distanceToStop, float speed)
-    {
-        var direction = Vector3.zero;
-        while(Vector3.Distance(transform.position, target.position) > distanceToStop)
+        if(Vector3.Distance(transform.position, hookshotPosition) < reachedHookshotPositionDistance)
         {
-            direction = target.position - transform.position;
-            rb.AddRelativeForce(direction.normalized * speed, ForceMode.Impulse);
-            Debug.Log("FORCE");
-            yield return null;
+            state = State.Normal;
         }
-        rb.velocity = Vector3.zero;
     }
+
 }
