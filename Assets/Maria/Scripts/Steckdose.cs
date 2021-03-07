@@ -16,6 +16,7 @@ public class Steckdose : MonoBehaviour
 
     void Update()
     {
+        print("A");
         if (playerIsNear && isClickedOn && isAvailable)
         {
             isAvailable = false;
