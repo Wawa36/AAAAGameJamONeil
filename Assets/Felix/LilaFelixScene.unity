@@ -1526,7 +1526,7 @@ GameObject:
   - component: {fileID: 1845662110}
   m_Layer: 0
   m_Name: PlayerCharacter
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1796,6 +1796,30 @@ PrefabInstance:
     - target: {fileID: 2241757069902450988, guid: 55c7460bd7639e1428a192cf8c29a9c9, type: 3}
       propertyPath: m_Name
       value: Steckdose (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2241757071187455074, guid: 55c7460bd7639e1428a192cf8c29a9c9, type: 3}
+      propertyPath: m_Size.x
+      value: 15.221052
+      objectReference: {fileID: 0}
+    - target: {fileID: 2241757071187455074, guid: 55c7460bd7639e1428a192cf8c29a9c9, type: 3}
+      propertyPath: m_Size.y
+      value: 4.329315
+      objectReference: {fileID: 0}
+    - target: {fileID: 2241757071187455074, guid: 55c7460bd7639e1428a192cf8c29a9c9, type: 3}
+      propertyPath: m_Size.z
+      value: 13.689583
+      objectReference: {fileID: 0}
+    - target: {fileID: 2241757071187455074, guid: 55c7460bd7639e1428a192cf8c29a9c9, type: 3}
+      propertyPath: m_Center.x
+      value: -0.26725674
+      objectReference: {fileID: 0}
+    - target: {fileID: 2241757071187455074, guid: 55c7460bd7639e1428a192cf8c29a9c9, type: 3}
+      propertyPath: m_Center.y
+      value: 1.2793121
+      objectReference: {fileID: 0}
+    - target: {fileID: 2241757071187455074, guid: 55c7460bd7639e1428a192cf8c29a9c9, type: 3}
+      propertyPath: m_Center.z
+      value: 1.0883102
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55c7460bd7639e1428a192cf8c29a9c9, type: 3}
