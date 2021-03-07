@@ -199,13 +199,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5861103}
-  m_LocalRotation: {x: -0.04881487, y: -0.8557026, z: -0.02934048, w: 0.51432425}
-  m_LocalPosition: {x: 0, y: -1011, z: -10}
+  m_LocalRotation: {x: -0.053110983, y: -0.75521684, z: -0.020566545, w: 0.65299606}
+  m_LocalPosition: {x: 472, y: -430, z: 147}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -5.764, y: -118.138, z: 3.074}
+  m_LocalEulerAnglesHint: {x: -5.764, y: -98.458, z: 3.074}
 --- !u!1001 &967338164
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -213,6 +213,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -9066851089305176976, guid: e525ee54168e7cd4eaa9e7771c86a7af, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c888bc6c8fdc9ea42884f86a6d690232, type: 2}
     - target: {fileID: -8679921383154817045, guid: e525ee54168e7cd4eaa9e7771c86a7af, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -269,6 +273,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: OneillCylinder
       objectReference: {fileID: 0}
+    - target: {fileID: 1803375734992133531, guid: e525ee54168e7cd4eaa9e7771c86a7af, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f0e4b5b09c8976940bbff8f8ac6f61e2, type: 2}
     - target: {fileID: 6265458910323654949, guid: e525ee54168e7cd4eaa9e7771c86a7af, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
