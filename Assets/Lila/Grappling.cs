@@ -37,6 +37,7 @@ public class Grappling : MonoBehaviour
         //characterController = GetComponent<CharacterController>();
         playerCamera = Camera.main;
         state = State.Normal;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update()
@@ -100,8 +101,8 @@ public class Grappling : MonoBehaviour
         {
             Debug.Log("CLICKED");
 
-            ray = playerCamera.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit raycastHit))
+
+            if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out RaycastHit raycastHit))
             {
                 hookshotPosition = raycastHit.point;
                 state = State.HookshotFlyingPlayer;
