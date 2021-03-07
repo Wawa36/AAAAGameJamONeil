@@ -20,10 +20,12 @@ public class Grappling : MonoBehaviour
     public Vector3 EulerAngleVelocity = new Vector3(0, 5, 0);
     private Vector3 moveDir;
     private Rigidbody rigibody;
+    private FauxGravityBody fauxGravityBody;
 
     private void Start()
     {
         rigibody = this.GetComponent<Rigidbody>();
+        fauxGravityBody = this.GetComponent<FauxGravityBody>();
     }
 
     private enum State
@@ -49,10 +51,12 @@ public class Grappling : MonoBehaviour
                 HandleHookshotStart();
                 HandleCharacterLook();
                 Debug.Log("normal");
+                fauxGravityBody.useGravity = true;
                 break;
             case State.HookshotFlyingPlayer:
                 Debug.Log("flying");
                 HandleCharacterLook();
+                fauxGravityBody.useGravity = false;
                 break;
         }
     }
@@ -119,15 +123,15 @@ public class Grappling : MonoBehaviour
     {
         Vector3 hookshotDir = (hookshotPosition - transform.position).normalized;
 
-        float hookshotSpeedMin = 0.1f;
-        float hookshotSpeedMax = 1f;
+        float hookshotSpeedMin = 1f;
+        float hookshotSpeedMax = 5f;
         float hookshotSpeed = Mathf.Clamp(Vector3.Distance(transform.position, hookshotPosition), hookshotSpeedMin, hookshotSpeedMax);
         float hookshotSpeedMultiplier = 1f;
 
         GetComponent<Rigidbody>().MovePosition(GetComponent<Rigidbody>().position + hookshotDir * hookshotSpeed * hookshotSpeedMultiplier);
         //characterController.Move(hookshotDir * hookshotSpeed * hookshotSpeedMultiplier * Time.deltaTime);
         //transform.position = Vector3.MoveTowards(transform.position, hookshotPosition, .5f);
-
+        Debug.Log(hookshotSpeed + " this is hookedshotspeed");
 
         float reachedHookshotPositionDistance = 3f;
         if (Vector3.Distance(transform.position, hookshotPosition) < reachedHookshotPositionDistance)

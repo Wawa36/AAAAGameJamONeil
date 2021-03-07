@@ -9,17 +9,26 @@ public class FauxGravityBody : MonoBehaviour
     private Rigidbody rigidbody;
     private Transform myTransform;
 
+    public bool useGravity;
+
     void Start()
     {
         rigidbody = this.GetComponent<Rigidbody>();
         rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
         rigidbody.useGravity = false;
         myTransform = this.transform;
+
+        useGravity = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        fauxGravityAttraction.Attract(myTransform);
+        if(useGravity)
+        {
+            fauxGravityAttraction.Attract(myTransform);
+        }
+
+        fauxGravityAttraction.Orientate(myTransform);
     }
 }
