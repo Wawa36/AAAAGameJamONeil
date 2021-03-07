@@ -5,21 +5,19 @@ using UnityEngine.UI;
 
 public class Jetpack : MonoBehaviour
 {
-    //Rigidbody rigid;
+    Rigidbody rigid;
     [SerializeField] Image img;
     [SerializeField] float jetpackForce = 2;
     [Range(0, 1)] float fuel = 1;
     float sizeDeltaX = 0;
     float sizeDeltaY = 0;
 
-    private CharacterController characterController;
 
     void Start()
     {
-        //rigid = this.GetComponent<Rigidbody>();
+        rigid = this.GetComponent<Rigidbody>();
         sizeDeltaX = img.GetComponent<RectTransform>().sizeDelta.x;
         sizeDeltaY = img.GetComponent<RectTransform>().sizeDelta.y;
-        characterController = GetComponent<CharacterController>();
     }
 
     // Update is called once per frame
@@ -36,8 +34,7 @@ public class Jetpack : MonoBehaviour
             if (fuel > 0)
             {
                 Debug.Log("YAHHAS");
-                characterController.Move(transform.up * jetpackForce * Time.deltaTime);
-                //rigid.AddForce(transform.up.normalized * jetpackPower * Random.Range(0, jetpackForce) * Random.Range(0f, 2f));
+                rigid.AddForce(transform.up.normalized * jetpackPower * Random.Range(0, jetpackForce) * Random.Range(0f, 2f));
                 fuel -= 0.003f;
             }
         }

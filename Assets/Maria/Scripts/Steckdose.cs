@@ -16,8 +16,9 @@ public class Steckdose : MonoBehaviour
 
     void Update()
     {
-        if (playerIsNear && isClickedOn && isAvailable)
-        {
+
+            if (playerIsNear && isClickedOn && isAvailable)
+            {
             isAvailable = false;
             if (wireManager.currentWire.wireStartPoint == Vector3.zero)
             {
