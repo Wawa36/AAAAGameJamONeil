@@ -112,7 +112,7 @@ public class Grappling : MonoBehaviour
 
     private bool TestInputDownHookshot()
     {
-        return Input.GetMouseButtonDown(0);
+        return Input.GetKeyDown(KeyCode.E);
     }
 
     private void HandleHookshotMovement()
