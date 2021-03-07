@@ -37,17 +37,21 @@ public class Jetpack : MonoBehaviour
             }
             else
             {
-                print("AAA");
                 rigid.AddForce((-1 * transform.up.normalized) * jetpackPower * jetpackForce * 10);
             }
         }
 
         UpdateFuel();
+        ReloadFuel();
     }
     void UpdateFuel()
     {
         img.color = Remap(fuel, 1, 0, Color.green, Color.red);
         img.GetComponent<RectTransform>().sizeDelta = new Vector2(sizeDeltaX, Remap(fuel, 1, 0, sizeDeltaY, 0));
+    }
+    void ReloadFuel()
+    {
+
     }
     public float Remap(float value, float from1, float to1, float from2, float to2)
     {
