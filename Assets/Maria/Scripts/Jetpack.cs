@@ -40,9 +40,9 @@ public class Jetpack : MonoBehaviour
                 rigid.AddForce((-1 * transform.up.normalized) * jetpackPower * jetpackForce * 10);
             }
         }
-
+ReloadFuel();
         UpdateFuel();
-        ReloadFuel();
+        
     }
     void UpdateFuel()
     {
@@ -51,7 +51,10 @@ public class Jetpack : MonoBehaviour
     }
     void ReloadFuel()
     {
-
+        if (Input.GetKey(KeyCode.Return))
+        {
+            fuel = 1;
+        }
     }
     public float Remap(float value, float from1, float to1, float from2, float to2)
     {
