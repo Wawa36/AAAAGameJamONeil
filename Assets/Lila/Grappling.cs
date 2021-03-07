@@ -29,15 +29,17 @@ public class Grappling : MonoBehaviour
         state = State.Normal;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         switch (state)
         {
             default:
             case State.Normal:
                 HandleHookshotStart();
+                Debug.Log("normal");
                 break;
             case State.HookshotFlyingPlayer:
+                Debug.Log("flying");
                 HandleHookshotMovement();
                 break;
         }
@@ -47,6 +49,8 @@ public class Grappling : MonoBehaviour
     {
         if (TestInputDownHookshot())
         {
+            Debug.Log("CLICKED");
+
             ray = playerCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit raycastHit))
             {
@@ -75,7 +79,7 @@ public class Grappling : MonoBehaviour
         //transform.position = Vector3.MoveTowards(transform.position, hookshotPosition, .5f);
 
 
-        float reachedHookshotPositionDistance = 1f;
+        float reachedHookshotPositionDistance = 3f;
         if (Vector3.Distance(transform.position, hookshotPosition) < reachedHookshotPositionDistance)
         {
             GetComponent<Rigidbody>().velocity = Vector3.zero;
@@ -85,6 +89,7 @@ public class Grappling : MonoBehaviour
 
         if (TestInputDownHookshot())
         {
+            Debug.Log("CLICKED");
             StopHookshot();
         }
 
@@ -100,6 +105,7 @@ public class Grappling : MonoBehaviour
 
     private void StopHookshot()
     {
+        Debug.Log("STOP");
         state = State.Normal;
         ResetGravityEffect();
     }
