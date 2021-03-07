@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class GravityScript : MonoBehaviour
 {
+    public float gravityConst;
+    public GameObject player;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -11,8 +14,9 @@ public class GravityScript : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+        Vector3 gravityDirection = player.transform.position - new Vector3(player.transform.position.x, 0, 0);
+        Physics.gravity = gravityDirection.normalized * gravityConst;
     }
 }
