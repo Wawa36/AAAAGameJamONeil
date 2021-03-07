@@ -22,8 +22,9 @@ public class PlayerMovement : MonoBehaviour
         float vertical = Input.GetAxis("Vertical");
         float tempYValue = rigid.velocity.y;
         rigid.velocity = Vector3.zero;
-        rigid.velocity = vertical * transform.forward.normalized * speed; //new Vector3(rigid.velocity.x, rigid.velocity.y, vertical*speed);
+        rigid.velocity = vertical * transform.forward.normalized * speed; 
         rigid.velocity = new Vector3(rigid.velocity.x, tempYValue, rigid.velocity.z);
-        this.transform.rotation = this.transform.rotation * Quaternion.AngleAxis(horizontal * 0.4f, transform.up);
+        this.transform.eulerAngles = this.transform.eulerAngles + Quaternion.AngleAxis(horizontal * 0.7f, transform.up).eulerAngles;
+        rigid.angularVelocity = Vector3.zero;
     }
 }
