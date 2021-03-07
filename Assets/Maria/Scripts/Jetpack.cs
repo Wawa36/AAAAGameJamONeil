@@ -33,16 +33,11 @@ public class Jetpack : MonoBehaviour
             if (fuel > 0)
             {
                 rigid.AddForce(transform.up.normalized * jetpackPower * Random.Range(0, jetpackForce) * Random.Range(0f, 2f));
-                fuel -= 0.001f;
-            }
-            else
-            {
-                rigid.AddForce((-1 * transform.up.normalized) * jetpackPower * jetpackForce * 10);
+                fuel -= 0.003f;
             }
         }
-ReloadFuel();
+        ReloadFuel();
         UpdateFuel();
-        
     }
     void UpdateFuel()
     {
