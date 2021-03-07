@@ -12,7 +12,7 @@ public class GravityScript : MonoBehaviour
         Vector3 gravityDirection = player.transform.position - new Vector3(player.transform.position.x, 0, 0);
         Physics.gravity = gravityDirection.normalized * gravityConst;
 
-        //player.transform.up = -gravityDirection.normalized;
+        player.transform.up = -gravityDirection.normalized;
        
     }
 }
