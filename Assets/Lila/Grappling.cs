@@ -48,7 +48,7 @@ public class Grappling : MonoBehaviour
             case State.Normal:
                 HandleHookshotStart();
                 HandleCharacterLook();
-                Debug.Log("normal");
+                //Debug.Log("normal");
                 break;
             case State.HookshotFlyingPlayer:
                 Debug.Log("flying");
