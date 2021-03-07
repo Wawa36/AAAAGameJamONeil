@@ -41,12 +41,8 @@ public class Grappling : MonoBehaviour
         {
             grapplePoint = hit.point;
             //push towards point
-            transform.position = hit.transform.position;
+            StartCoroutine(FollowTarget(hit.transform, 3, 50));
             Debug.Log("Grappled");
-        }
-        else
-        {
-            Debug.Log("NO GRAPPLE");
         }
     }
 
@@ -55,13 +51,16 @@ public class Grappling : MonoBehaviour
 
     }
 
-    void FollowTarget(Transform target, float distanceToStop, float speed)
+    IEnumerator FollowTarget(Transform target, float distanceToStop, float speed)
     {
         var direction = Vector3.zero;
-        if(Vector3.Distance(transform.position, target.position) > distanceToStop)
+        while(Vector3.Distance(transform.position, target.position) > distanceToStop)
         {
             direction = target.position - transform.position;
-            rb.AddRelativeForce(direction.normalized * speed, ForceMode.Force);
+            rb.AddRelativeForce(direction.normalized * speed, ForceMode.Impulse);
+            Debug.Log("FORCE");
+            yield return null;
         }
+        rb.velocity = Vector3.zero;
     }
 }
