@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class Kabel : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public Vector3 wireStartPoint;
+    public Vector3 wireEndPoint;
 
-    // Update is called once per frame
-    void Update()
+    public void MakeTheConnection()
     {
-        
+        if (wireStartPoint!=null&&wireEndPoint!=null)
+        {
+            print("making a wire");
+            GetComponent<LineRenderer>().SetPositions(new Vector3[2] { wireStartPoint , wireEndPoint });
+        }
+        else
+        {
+            print("something went wrong here");
+        }
     }
 }

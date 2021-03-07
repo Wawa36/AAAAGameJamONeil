@@ -4,15 +4,55 @@ using UnityEngine;
 
 public class Steckdose : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    bool isAvailable = true;
+    bool playerIsNear = false;
+    bool isClickedOn = false;
+    WireManager wireManager;
+
+    private void Start()
     {
-        
+        wireManager = WireManager.instance;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (playerIsNear && isClickedOn && isAvailable)
+        {
+            isAvailable = false;
+            if (wireManager.currentWire.wireStartPoint == Vector3.zero)
+            {
+                wireManager.currentWire.wireStartPoint = this.transform.position;
+                print("A");
+            }
+            else
+            {
+                print("B");
+                wireManager.currentWire.wireEndPoint = this.transform.position;
+                wireManager.currentWire.GetComponent<Kabel>().MakeTheConnection();
+            }
+        }
+
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            playerIsNear = true;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            playerIsNear = false;
+        }
+    }
+    private void OnMouseDown()
+    {
+        isClickedOn = true;
+    }
+    private void OnMouseUp()
+    {
+        isClickedOn = false;
     }
 }
