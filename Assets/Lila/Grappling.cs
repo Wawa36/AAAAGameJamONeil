@@ -4,34 +4,32 @@ using UnityEngine;
 
 public class Grappling : MonoBehaviour
 {
-    private Transform camera;
-    [SerializeField]
-    private float maxDistance = 100f;
-    [SerializeField]
-    private LayerMask grappleLayer;
-    private Rigidbody rb;
+    [SerializeField] private float mouseSensitivity = 1f;
 
-    private Ray ray;
-
+    //private CharacterController characterController;
+    private float cameraVerticalAngle;
+    private float characterVelocityY;
+    private Vector3 characterVelocityMomentum;
+    private Camera playerCamera;
     private State state;
     private Vector3 hookshotPosition;
-    private float reachedHookshotPositionDistance;
+    private Ray ray;
+
 
     private enum State
     {
         Normal,
-        HookshotFlyingPlayer
+        HookshotFlyingPlayer,
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        camera = Camera.main.transform;
-        rb = GetComponent<Rigidbody>();
+        //characterController = GetComponent<CharacterController>();
+        playerCamera = Camera.main;
+        state = State.Normal;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
         switch (state)
         {
@@ -42,38 +40,77 @@ public class Grappling : MonoBehaviour
             case State.HookshotFlyingPlayer:
                 HandleHookshotMovement();
                 break;
-
-        }
-        if (Input.GetMouseButtonDown(0))
-        {
-            HandleHookshotStart();
         }
     }
 
-    void HandleHookshotStart()
+    private void HandleHookshotStart()
     {
-        RaycastHit hit;
-
-        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        if(Physics.Raycast(ray, out hit, maxDistance, grappleLayer))
+        if (TestInputDownHookshot())
         {
-            hookshotPosition = hit.point;
-            state = State.HookshotFlyingPlayer;
+            ray = playerCamera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit raycastHit))
+            {
+                hookshotPosition = raycastHit.point;
+                state = State.HookshotFlyingPlayer;
+            }
         }
     }
 
-    void HandleHookshotMovement()
+    private bool TestInputDownHookshot()
+    {
+        return Input.GetMouseButtonDown(0);
+    }
+
+    private void HandleHookshotMovement()
     {
         Vector3 hookshotDir = (hookshotPosition - transform.position).normalized;
 
-        float hookshotSpeed = Vector3.Distance(transform.position, hookshotPosition);
-        float speedMultiplier = 2f;
+        float hookshotSpeedMin = 10f;
+        float hookshotSpeedMax = 20f;
+        float hookshotSpeed = Mathf.Clamp(Vector3.Distance(transform.position, hookshotPosition), hookshotSpeedMin, hookshotSpeedMax);
+        float hookshotSpeedMultiplier = 5f;
 
-        if(Vector3.Distance(transform.position, hookshotPosition) < reachedHookshotPositionDistance)
+        GetComponent<Rigidbody>().AddForce(hookshotDir * hookshotSpeed * hookshotSpeedMultiplier);
+        //characterController.Move(hookshotDir * hookshotSpeed * hookshotSpeedMultiplier * Time.deltaTime);
+        //transform.position = Vector3.MoveTowards(transform.position, hookshotPosition, .5f);
+
+
+        float reachedHookshotPositionDistance = 1f;
+        if (Vector3.Distance(transform.position, hookshotPosition) < reachedHookshotPositionDistance)
         {
-            state = State.Normal;
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+
+            StopHookshot();
+        }
+
+        if (TestInputDownHookshot())
+        {
+            StopHookshot();
+        }
+
+        if (TestInputJump())
+        {
+            float momentumExtraSpeed = 7f;
+            characterVelocityMomentum = hookshotDir * hookshotSpeed * momentumExtraSpeed;
+            float jumpSpeed = 40f;
+            characterVelocityMomentum += Vector3.up * jumpSpeed;
+            StopHookshot();
         }
     }
 
+    private void StopHookshot()
+    {
+        state = State.Normal;
+        ResetGravityEffect();
+    }
+
+    private void ResetGravityEffect()
+    {
+        characterVelocityY = 0f;
+    }
+
+    private bool TestInputJump()
+    {
+        return Input.GetKeyDown(KeyCode.Space);
+    }
 }
