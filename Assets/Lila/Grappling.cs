@@ -91,13 +91,21 @@ public class Grappling : MonoBehaviour
     private void Movement()
     {
         float vertical = Input.GetAxis("Vertical");
-        moveDir = this.transform.forward * vertical;
+        //moveDir = this.transform.forward * vertical;
+        //tilly
+        moveDir = playerCamera.transform.forward * vertical;
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            rigibody.MovePosition(rigibody.position + (-rigibody.transform.right * moveSpeed * Time.deltaTime));
+        }
 
         rigibody.MovePosition(rigibody.position + (moveDir * moveSpeed * Time.deltaTime));
         float horizontal = Input.GetAxis("Horizontal");
         Quaternion deltaRotation = Quaternion.Euler(EulerAngleVelocity * horizontal * Time.fixedDeltaTime);
         rigibody.MoveRotation(rigibody.rotation * deltaRotation);
     }
+
 
     private void HandleHookshotStart()
     {
